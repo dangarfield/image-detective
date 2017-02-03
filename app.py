@@ -52,10 +52,11 @@ def initialise():
                 src_files.append({'folder':folder,'file': name})
 
         for i, src_file in enumerate(src_files):
-            folder = src_file['folder']
-            file = src_file['file']
-            print str(i+1) + " of " + str(len(src_files)) + " - " + folder + file
-            generate_image_utils.generate_image_variants(app_services.SRC, app_services.INDEX, folder, file)
+            if args.image is None or src_file['file'] == file_filter:
+                folder = src_file['folder']
+                file = src_file['file']
+                print str(i+1) + " of " + str(len(src_files)) + " - " + folder + file
+                generate_image_utils.generate_image_variants(app_services.SRC, app_services.INDEX, folder, file)
 
     ####### UPLOAD INDEX IMAGES TO S3 #######
     elif args.method == "upload-index":

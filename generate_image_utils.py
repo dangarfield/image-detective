@@ -44,17 +44,20 @@ def generate_image_variants(SRC, GEN, folder, file):
     img.resize([int(1.5 * s) for s in img.size]).save(GEN +
                                                       name + "-resize-big-proportional." + ext)
 
-    img.crop(box=(100, 100, img.width - 100, img.height - 100)
+    if img.width > 200 and img.height > 200:
+        img.crop(box=(100, 100, img.width - 100, img.height - 100)
              ).save(GEN + name + "-crop-all-100." + ext)
-    img.crop(box=(200, 200, 600, 600)
+    if img.width >= 600 and img.height >= 600:
+        img.crop(box=(200, 200, 600, 600)
              ).save(GEN + name + "-crop-left-400." + ext)
-    img.crop(box=(img.width - 600, img.height - 600, img.width - 200, img.height - 200)
+        img.crop(box=(img.width - 600, img.height - 600, img.width - 200, img.height - 200)
              ).save(GEN + name + "-crop-right-400." + ext)
     img.crop(box=(0, 0, img.width / 2, img.height)
              ).save(GEN + name + "-crop-left-half." + ext)
     img.crop(box=(img.width / 2, 0, img.width, img.height)
              ).save(GEN + name + "-crop-right-half." + ext)
-    img.crop(box=((img.width / 2) - 200, (img.height / 2) - 200, (img.width / 2) + 200, (img.height / 2) + 200)
+    if img.width > 400 and img.height > 400:
+        img.crop(box=((img.width / 2) - 200, (img.height / 2) - 200, (img.width / 2) + 200, (img.height / 2) + 200)
              ).save(GEN + name + "-crop-centre-400." + ext)
 
     img.rotate(5).save(GEN + name + "-rotate-5." + ext)
