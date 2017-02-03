@@ -7,6 +7,7 @@ import generate_image_utils
 import hash_store
 import aws_utils
 
+print 'Loading...'
 
 def initialise():
     parser = argparse.ArgumentParser()
@@ -93,6 +94,15 @@ def initialise():
             print str(i+1) + " of " + str(len(index_files)) + " - " + folder + file
             aws_utils.upload_file_to_s3(aws_utils.QUERY_BUCKET_NAME, app_services.SRC, folder, file)
 
+    ####### DOWNLOAD #######
+    elif args.method == "download":
+
+        print "Download source images to local machine"
+        app_services.clean_files()
+        files = aws_utils.get_all_files_in_query_bucket()
+        for file in files:
+            aws_utils.download_index_file(app_services.SRC, file)
+
 
     ####### INDEX #######
     elif args.method == "index":
@@ -104,6 +114,8 @@ def initialise():
 
         print "Create hashes and index, generate feature images, create feature hashes and index features for all - " + file_filter
         index_files = fnmatch.filter(os.listdir(app_services.INDEX), file_filter)
+        print str(len(index_files)) + " - " + file_filter + " - " + app_services.INDEX
+        print 'Need to recursively check directories'
         for index_file in index_files:
             print index_file
             app_services.hash_and_index_full_and_features(app_services.INDEX, app_services.INDEX_FEATURES, index_file)

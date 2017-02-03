@@ -1,0 +1,16 @@
+type,file,total,totalPositive,totalNegative,files
+phash,_T2A4718-EditPreview.jpg,1,1,0,_T2A4718-EditPreview.jpg
+phash,AYT0615-1783-EditPreview-2.jpg,2,2,0,AYT0615-1783-EditPreview-2.jpg,AYT0615-1783-EditPreview.jpg
+phash,AYT0615-1783-EditPreview.jpg,2,2,0,AYT0615-1783-EditPreview-2.jpg,AYT0615-1783-EditPreview.jpg
+phash,DE382624Preview.jpg,1,1,0,DE382624Preview.jpg
+phash,IL049180Preview.jpg,1,1,0,IL049180Preview.jpg
+dhash,_T2A4718-EditPreview.jpg,1,1,0,_T2A4718-EditPreview.jpg
+dhash,AYT0615-1783-EditPreview-2.jpg,2,2,0,AYT0615-1783-EditPreview-2.jpg,AYT0615-1783-EditPreview.jpg
+dhash,AYT0615-1783-EditPreview.jpg,2,2,0,AYT0615-1783-EditPreview-2.jpg,AYT0615-1783-EditPreview.jpg
+dhash,DE382624Preview.jpg,1,1,0,DE382624Preview.jpg
+dhash,IL049180Preview.jpg,1,1,0,IL049180Preview.jpg
+ahash,_T2A4718-EditPreview.jpg,1,1,0,_T2A4718-EditPreview.jpg
+ahash,AYT0615-1783-EditPreview-2.jpg,2,2,0,AYT0615-1783-EditPreview-2.jpg,AYT0615-1783-EditPreview.jpg
+ahash,AYT0615-1783-EditPreview.jpg,2,2,0,AYT0615-1783-EditPreview-2.jpg,AYT0615-1783-EditPreview.jpg
+ahash,DE382624Preview.jpg,1,1,0,DE382624Preview.jpg
+ahash,IL049180Preview.jpg,1,1,0,IL049180Preview.jpg

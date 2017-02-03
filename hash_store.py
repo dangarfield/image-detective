@@ -26,9 +26,11 @@ def bonzai_connection():
     }]
     return Elasticsearch(es_header)
 
-# es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
-es = Elasticsearch([{'host': 'search-content-hackathon-dg-test-pn4ggl2rcwaa5cxsy5ym53qkoa.eu-central-1.es.amazonaws.com', 'port': 443, 'use_ssl': True}])
+print 'Connecting to elasticsearch service'
+es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
+# es = Elasticsearch([{'host': 'search-content-hackathon-dg-test-pn4ggl2rcwaa5cxsy5ym53qkoa.eu-central-1.es.amazonaws.com', 'port': 443, 'use_ssl': True}])
 # es = bonzai_connection()
+
 es.ping()
 
 TYPES = ['ahash', 'phash', 'dhash']#, 'whash', 'whashDb4']
@@ -132,6 +134,96 @@ def query_with_features(hash_data_full, hash_data_features, hash_type, use_full,
                 count = count + 1
 
         doc['query']['bool']['should'].append(full_query)
+    
+    if use_features:
+        for hash_data_feature in hash_data_features:
+            feature_query = {
+                'bool': {
+                    'must': {
+                        'term': {
+                            'data_type': 'feature'
+                        }
+                    },
+                    'minimum_should_match': "85%",
+                    'should': []
+                }
+            }
+            hash = hash_data_feature[hash_type]
+            #print str(hash)
+            count = 0
+            for x in hash.hash:
+                for y in x:
+                    # print str(count) + " - " + str(bool(y))
+                    term = {'term': {hash_type + '-' + str(count): bool(y)}}
+                    feature_query['bool']['should'].append(term)
+                    count = count + 1
+            doc['query']['bool']['should'].append(feature_query)
+
+
+    res = es.search(index=index_name, doc_type='hash', body=doc,
+                    _source_include=['imgPath', 'imgPathFeature', 'data_type'], size=500)
+
+    # There will be a better way of grouping and ordering the results with the search engine itself, but without consulting the API docs and for a quick fix, I'll just do it here
+
+    result_docs = set()
+    for result_doc in res['hits']['hits']:
+        result_docs.add(result_doc['_source']['imgPath'])
+    
+    print "Found " + str(len(result_docs)) + " results for query"
+
+
+
+    return result_docs
+
+
+
+def query_with_features_fuzzy(hash_data_full, hash_data_features, hash_type, use_full, use_features, index_name='local'):
+    
+    # Note - This is a really horrible way of querying in order to use XOR type distances (eg, fuzzy matching / levenshtein distance)
+
+    doc = {
+        "query": {
+            "match": {
+                "should": []
+            }
+        }
+    }
+
+    if use_full:
+        
+        hash = hash_data_full[hash_type]
+        print str(hash)
+        
+        hashStr = str(hash)
+        print hashStr
+        # this won't be right for non 16, need to calculate the zfill
+        # dynamically
+        hashBinary = bin(int(hashStr, 16))[2:].zfill(16)
+        print hashBinary
+
+        full_query = {
+            'query': {
+                'match': {
+                    hash_type+"-string": {
+                        "query": hashStr,
+                        "fuzziness":0
+                    }
+                }
+            }
+        }
+
+        
+        print full_query
+        count = 0
+        # for x in hash.hash:
+        #     for y in x:
+        #         # print str(count) + " - " + str(bool(y))
+        #         term = {'term': {hash_type + '-' + str(count): bool(y)}}
+        #         full_query['bool']['should'].append(term)
+        #         count = count + 1
+
+        #doc['query']['bool']['should'].append(full_query)
+        doc = full_query
     
     if use_features:
         for hash_data_feature in hash_data_features:

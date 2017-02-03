@@ -24,6 +24,10 @@ We need python with the following libraries:
 * cv2 - OpenCV python wrapper
 * six - Some python utility functions
 * elasticsearch - Elasticsearch wrapper
+* certifi - Remove SSL exceptions
+* requests - http requests
+* boto3 - AWS cli
+
 
 Installing scipy and numpy on windows is a pain. I would strongly suggest installing Anaconda directly instead of python (Anaconda is a bundled version of python that also contains key computer science libraries like numpy and scipy) - `https://www.continuum.io/downloads`
 * Download Anaconda with base of Python 2.7 (although 3.x will probably work, the examples of hashing tend to use 2.7)
@@ -39,6 +43,22 @@ Install OpenCV - The most popular computer vision library
 * Download 2.4.13 from `http://opencv.org/downloads.html`
 * Unzip to a local directory. I use `C:\path_installations\opencv-2.4.13`
 * Copy and paste the file `C:\path_installations\opencv-2.4.13\build\python\2.7\x64\cv2.pyd` to your python site-packages directory `C:\path_installations\Anaconda2\Lib\site-packages`
+
+
+## AWS 
+
+pip install awscli
+
+Run: aws configure
+
+Access: AKIAJ5GWUIFRZXK3Q7UQ
+Secret: 0JVVyQBedKlz/n23UFPzYP8Slym3lGyTbcVaM6GL
+Region: eu-central-1
+
+You can now download the source images.
+
+For creating a lambda function, copy the contents from the lib folder into the root and zip the whole lot (remove some of the unneeded folders, reports, images etc).
+This should run on a lambda function as the python libraries have been pre-compiled and packaged.
 
 ## IDE
 

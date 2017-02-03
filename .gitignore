@@ -1,3 +1,4 @@
 images-index/
 images-query/
 *.pyc
+.DS_Store

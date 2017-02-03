@@ -8,12 +8,14 @@ import hash_store
 import feature_identifier
 import aws_utils
 
-SRC = "/tmp/images-src/"
-QUERY = "/tmp/images-query/"
+#HOME = "/tmp"
+HOME = "/Users/DanGarfield/code/image-detective/assets"
+SRC = HOME+"/images-src/"
+QUERY = HOME+"/images-query/"
 QUERY_FEATURES = QUERY + "features/"
-INDEX = "/tmp/images-index/"
+INDEX = HOME+"/images-index/"
 INDEX_FEATURES = INDEX + "features/"
-REPORT = "/tmp/reports/"
+REPORT = HOME+"/reports/"
 
 def clean_files():
     generate_image_utils.remove_generated_images(INDEX, INDEX_FEATURES)
@@ -57,7 +59,7 @@ def query(filename, hash_type, use_full, use_features, index_name='local'):
             query_data['hash_data_features'].append(hash_generator.generate_hashes_for_image(QUERY_FEATURES + generated_feature_file))
 
     # Search for hashes
-    results = hash_store.query_with_features(query_data['hash_data_full'], query_data['hash_data_features'], hash_type, use_full, use_features, index_name=index_name)
+    results = hash_store.query_with_features_fuzzy(query_data['hash_data_full'], query_data['hash_data_features'], hash_type, use_full, use_features, index_name=index_name)
     
     # Remove temporary query images
     #TODO - Improve this, we shouldn't really need to clean up the lambda storage
