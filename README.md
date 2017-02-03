@@ -51,8 +51,8 @@ pip install awscli
 
 Run: aws configure
 
-Access: AKIAJ5GWUIFRZXK3Q7UQ
-Secret: 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
+Access: (ask for this)
+Secret: (ask for this)
 Region: eu-central-1
 
 You can now download the source images.
