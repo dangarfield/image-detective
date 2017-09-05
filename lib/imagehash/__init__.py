@@ -28,6 +28,8 @@ Rotation by 21: 19 Hamming difference
 Rotation by 26: 21 Hamming difference
 >>>
 
+Copyright (c) 2013-2016, Johannes Buchner -- see attached LICENSE file
+https://github.com/JohannesBuchner/imagehash
 """
 from __future__ import (absolute_import, division, print_function)
 
